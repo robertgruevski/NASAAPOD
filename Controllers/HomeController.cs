@@ -7,14 +7,14 @@ namespace NASAAPOD.Controllers
 {
 	public class HomeController : Controller
 	{
-		private const string NASA_API_KEY = "DEMO_KEY"; // Replace with your actual API key
+		private const string NASA_API_KEY = "H7jU3IxeoLF4V0Ue6xj4oQQHYwXs1jG9PcI2XQsY"; // Replace with your actual API key
 		private const string NASA_API_URL = "https://api.nasa.gov/planetary/apod";
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(IHttpClientFactory httpClientFactory)
 		{
-			_logger = logger;
+			_httpClientFactory = httpClientFactory;
 		}
 
 		public async Task<IActionResult> Index()

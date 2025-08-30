@@ -1,8 +1,95 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Apod
+
+@{
+    ViewData["Title"] = "NASA Picture of the Day";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body {
+        background-color: #1a202c;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        text-align: center;
+    }
+    .card {
+        background-color: #2d3748;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .image-container {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+    .apod-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    .media-placeholder {
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        background-color: #4a5568;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .apod-title {
+        font-size: 1.875rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    .apod-copyright {
+        font-size: 0.875rem;
+        color: #a0aec0;
+        margin-top: 0.5rem;
+    }
+    .apod-explanation {
+        font-size: 1rem;
+        text-align: left;
+        line-height: 1.5;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="container">
+    @if (Model != null)
+    {
+        <div class="card">
+            <h1 class="apod-title">@Model.Title</h1>
+            @if (Model.Media_type == "image")
+            {
+                <div class="image-container">
+                    <img class="apod-image" src="@Model.Url" alt="@Model.Title" />
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Copyright))
+                {
+                    <p class="apod-copyright">&copy; @Model.Copyright</p>
+                }
+            }
+            else
+            {
+                <div class="media-placeholder rounded-lg">
+                    <span>This is a video. Please visit the <a href="@Model.Url" target="_blank" class="text-blue-400 hover:text-blue-300">original link</a> to view it.</span>
+                </div>
+            }
+            <p class="apod-explanation">@Model.Explanation</p>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <p>@ViewBag.Error</p>
+        </div>
+    }
 </div>
+
+<script src="https://cdn.tailwindcss.com"></script>
